@@ -23,16 +23,14 @@ func Register[E Enum](descriptions map[E]string) {
 	// check if the enum type is already registered
 	if _, alreadyRegistered := enumSet[uid]; alreadyRegistered {
 		// TODO: check if we want to panic here
-		log.Printf("[Enum] %s is already registered with uid %s.", typeName(e, true), uid)
+		log.Printf("[Enum] %q is already registered with uid %q.", typeName(e, true), uid)
 		return
 	}
-	values := make([]E, len(descriptions))
+	values := make([]E, 0, len(descriptions))
 	stringToValue := make(map[string]E, len(descriptions))
-	i := 0
 	for key, value := range descriptions {
-		values[i] = key
+		values = append(values, key)
 		stringToValue[value] = key
-		i++
 	}
 	// register the enum type as a member of the enumSet
 	member := &enum[E]{
@@ -44,7 +42,7 @@ func Register[E Enum](descriptions map[E]string) {
 		stringToValue: stringToValue,
 	}
 	enumSet[uid] = member
-	log.Printf("[Enum] Successfully registered %q with values of %v.", member.fullName, member.values)
+	log.Printf("[Enum] Successfully registered %q as %v.", member.fullName, member.descriptions)
 }
 
 // List returns all the registered values of the given enum type.
