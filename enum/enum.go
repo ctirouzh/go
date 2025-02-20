@@ -6,8 +6,12 @@ import (
 	"strings"
 )
 
-type Enum interface {
+type numeric interface {
 	~int | ~int8 | ~int16 | ~int32 | ~int64 | ~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64
+}
+
+type Enum interface {
+	numeric | ~string
 	// EnumUid must be implemented to be an Enum.
 	// It must return a unique identifier for the Enum type.
 	EnumUid() string
