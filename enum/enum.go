@@ -11,7 +11,7 @@ type numeric interface {
 }
 
 type Enum interface {
-	numeric | ~string
+	numeric
 	// EnumUid must be implemented to be an Enum.
 	// It must return a unique identifier for the Enum type.
 	EnumUid() string
